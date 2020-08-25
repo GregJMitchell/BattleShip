@@ -10,4 +10,12 @@ attr_reader :name, :length
   def health
     @length
   end
+
+  def sunk?
+    if @length == 0
+      true
+    else
+      false
+    end
+  end
 end
