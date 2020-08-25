@@ -5,12 +5,16 @@ attr_reader :coordinate, :ship
     @coordinate = coordinate
     @ship = ship
   end
-  
+
   def empty?
-    if @ship != @coordinate
+    if @ship == nil
      true
     else
      false
     end
+  end
+
+  def place_ship(new_ship)
+    @ship = new_ship
   end
 end
