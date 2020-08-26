@@ -7,7 +7,7 @@ attr_reader :name, :length, :health
   end
 
   def sunk?
-    if @length == 0
+    if @health == 0
       true
     else
       false

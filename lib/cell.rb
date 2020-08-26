@@ -30,4 +30,16 @@ class Cell
   def fire_upon
     @ship.hit
   end
+
+  def render(player = nil)
+    if @ship.sunk? == true
+      'X'
+    elsif fired_upon? == true
+      'H'
+    elsif player == nil
+      '.'
+    else
+      'S'
+    end
+  end
 end
