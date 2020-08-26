@@ -1,4 +1,5 @@
 require './lib/cell'
+require './lib/ship'
 
 class Board
   attr_reader :cells
@@ -28,5 +29,17 @@ class Board
     @cells.keys.include?(coord)
   end
 
+  def valid_placement?(ship, placement)
+      @cells.keys.each_cons(placement.length).map do |coords|
+        if placement == coords
+          true
+
+        else
+          false
+        end
+      end
+
+
+  end
 
 end
