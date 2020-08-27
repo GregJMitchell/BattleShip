@@ -30,16 +30,40 @@ class Board
   end
 
   def valid_placement?(ship, placement)
-      @cells.keys.each_cons(placement.length).map do |coords|
-        if placement == coords
-          true
-
-        else
-          false
-        end
-      end
-
-
+    horizontal_placement(placement)
   end
+  #     @cells.keys.each_cons(placement.length).map do |coords|
+  #       if coords.include? placement == true
+  #         true
+  #       else
+  #         false
+  #       end
+  #     end
+  def horizontal_placement(placement)
+    index = 1
+    index2 = true
+
+    placement.each do |coords|
+      if coords.ord == placement[index].ord
+        index2 = true
+      elsif coords.ord != placement[index].ord
+        index2 = false
+        break
+      end
+      index += 1
+    end
+    index2
+  end
+  member?
+
+  ship length 3 needs either 3 letters or three numbers
+
+      # compare Array of cells against input array
+      # iterating through the cell array to make up mini arrays
+      # that are the length of the input
+      # check if input array is included in any of the cell arrays
+      # (Overlap)
+
+
 
 end
