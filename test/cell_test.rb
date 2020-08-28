@@ -28,4 +28,37 @@ class CellTest < Minitest::Test
     assert_equal "Cruiser", cell.ship.name
     assert_equal false, cell.empty?
   end
+
+  def test_it_can_be_fired_upon?
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser)
+
+    assert_equal false, cell.fired_upon?
+
+    cell.fire_upon
+    
+    assert_equal 2, cell.ship.health
+    assert_equal true, cell.fired_upon?
+  end
+
+  def test_it_can_render
+    cell1 = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell2 = Cell.new("C3")
+    cell2.place_ship(cruiser)
+
+    assert_equal ".", cell2.render
+    assert_equal "S", cell2.render(true)
+
+    cell2.fire_upon
+    
+    assert_equal 'H', cell2.render
+
+    cruiser.hit
+    cruiser.hit
+
+    assert_equal true, cruiser.sunk?
+    assert_equal 'X', cell2.render
+  end
 end

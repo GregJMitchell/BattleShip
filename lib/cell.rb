@@ -17,4 +17,28 @@ attr_reader :coordinate, :ship
   def place_ship(new_ship)
     @ship = new_ship
   end
+
+  def fired_upon?
+    if @ship.health < @ship.length
+      true
+    else
+      false
+    end
+  end
+
+  def fire_upon
+    @ship.hit
+  end
+
+  def render(player = nil)
+    if @ship.sunk? == true
+      'X'
+    elsif fired_upon? == true
+      'H'
+    elsif player == nil
+      '.'
+    else
+      'S'
+    end
+  end
 end
