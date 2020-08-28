@@ -23,11 +23,13 @@ class Board
       'D3' => Cell.new('D3'),
       'D4' => Cell.new('D4')
     }
+    @used_cells = []
   end
 
   def valid_coordinate?(coord)
     @cells.keys.include?(coord)
   end
+
 
   def valid_placement?(ship, placement)
     return false if ship.length != placement.length
@@ -47,12 +49,8 @@ class Board
   end
 
   def place(ship, placement)
-    if valid_placement?(ship, placement) == false
-      false
-    else
       placement.each do |cell|
         @cells[cell].place_ship(ship)
       end
-    end
   end
 end
