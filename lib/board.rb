@@ -30,14 +30,22 @@ class Board
     @cells.keys.include?(coord)
   end
 
+  def is_overlapping?(placement)
+    placement.each do |cell|
+      @used_cells << cell
+    end
+  end
 
   def valid_placement?(ship, placement)
     return false if ship.length != placement.length
 
+    
     number_array = []
     letter_array = []
     placement.each do |cell|
       return false unless valid_coordinate?(cell)
+
+      return false if @used_cells.include?(cell)
 
       letter_array << cell[0]
       number_array << cell[1]
@@ -52,5 +60,6 @@ class Board
       placement.each do |cell|
         @cells[cell].place_ship(ship)
       end
+      is_overlapping?(placement)
   end
 end
