@@ -60,11 +60,11 @@ class Game
 
   def render_turn
     puts "=============COMPUTER BOARD============="
-    @computer_board.render
+    print @computer_board.render
     puts "==============PLAYER BOARD=============="
-    @player_board.render(true)
+    print @player_board.render(true)
     puts "Enter the coordinate for your shot:"
-    puts ">"
+    print ">"
     player_shot
   end
 
@@ -74,10 +74,10 @@ class Game
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
       player_shot
-    elsif @computer_board["#{input}"].ship == true && @computer_board["#{input}"].ship.health == 1
-      puts "Your shot on #{input} has sunk their {#{@computer_board["#{input}"].ship.name}}"
-    elsif @computer_board["#{input}"].ship == true
-      @computer_board["#{input}"].fire_upon
+    elsif @computer_board.cells[input].ship == true && @computer_board.cells[input].ship.health == 1
+      puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
+    elsif @computer_board.cells[input].ship == true
+      @computer_board.cells[input].fire_upon
       puts "Your shot on #{input} was a hit!"
     else
       puts "Your shot on #{input} was a miss."
