@@ -30,13 +30,15 @@ attr_reader :coordinate, :ship
     @ship.hit
   end
 
-  def render(player = nil)
-    if @ship.sunk? == true
-      'X'
-    elsif fired_upon? == true
-      'H'
-    elsif player == nil
+  def render(player = false)
+    if @ship == nil
       '.'
+    elsif player == false
+      '.'
+    elsif fired_upon? == true
+      'S'
+    elsif @ship.sunk? == true
+      'X'
     else
       'S'
     end

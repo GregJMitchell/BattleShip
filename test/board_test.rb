@@ -66,7 +66,16 @@ class BoardTest < Minitest::Test
     board = Board.new
     cruiser = Ship.new('Cruiser', 3)
     board.place(cruiser, %w[A1 A2 A3])
+    
 
-    actual = ' 1 2 3 4 \nA . . . . \nB . . . .\C . . . .'
+    expected = ' 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n'
+    actual = board.render
+    
+    assert_equal expected, actual
+
+    expected = ' 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n'
+    actual = board.render(true)
+
+    assert_equal expected, actual 
   end
 end

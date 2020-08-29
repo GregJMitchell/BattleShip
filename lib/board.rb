@@ -1,5 +1,5 @@
-require './lib/cell'
-require './lib/ship'
+# require './lib/cell'
+# require './lib/ship'
 
 class Board
   attr_reader :cells
@@ -61,5 +61,36 @@ class Board
         @cells[cell].place_ship(ship)
       end
       is_overlapping?(placement)
+  end
+
+  def render(player = false)
+    number_array = %w[1 2 3 4]
+    letter_array = %w[A B C D]
+    grid = []
+
+    if player == true
+      letter_array.each do |letter|
+        number_array.each do |number|
+  
+          grid << @cells["#{letter}#{number}"].render(true)
+        end
+      end
+    else
+      letter_array.each do |letter|
+        number_array.each do |number|
+  
+          grid << @cells["#{letter}#{number}"].render
+        end
+      end
+    end
+    grid.each_slice(4).to_a
+    grid.insert(0, ' 1 2 3 4')
+    grid.insert(1, '\nA')
+    grid.insert(6, '\nB')
+    grid.insert(11, '\nC')
+    grid.insert(16, '\nD')
+    grid.insert(21, '\n')
+
+    grid.join(' ')
   end
 end
