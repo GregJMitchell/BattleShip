@@ -1,17 +1,16 @@
-require './lib/ship'
-
 class Cell
-  attr_reader :coordinate, :ship
+
+attr_reader :coordinate, :ship
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = ship
   end
 
   def empty?
-    if @ship.nil?
-      true
+    if @ship == nil
+     true
     else
-      false
+     false
     end
   end
 
@@ -31,13 +30,15 @@ class Cell
     @ship.hit
   end
 
-  def render(player = nil)
-    if @ship.sunk? == true
-      'X'
-    elsif fired_upon? == true
-      'H'
-    elsif player == nil
+  def render(player = false)
+    if @ship == nil
       '.'
+    elsif player == false
+      '.'
+    elsif fired_upon? == true
+      'S'
+    elsif @ship.sunk? == true
+      'X'
     else
       'S'
     end
