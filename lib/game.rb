@@ -75,13 +75,19 @@ class Game
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
       player_shot
+    elsif @player_shots.include(input)
+      puts "You have already shot at #{input}"
+      player_shot
     elsif @computer_board.cells[input].ship == true && @computer_board.cells[input].ship.health == 1
       puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
+      @player_shots << input
     elsif @computer_board.cells[input].ship == true
       @computer_board.cells[input].fire_upon
       puts "Your shot on #{input} was a hit!"
+      @@player_shots << input
     else
       puts "Your shot on #{input} was a miss."
+      @player_shots << input
 
     end
   end
