@@ -3,10 +3,10 @@ require './lib/ship'
 require './lib/board'
 
 class Game
-  attr_reader :player_grid, :computer_grid, :player_board, :computer_board
+  attr_reader :player_shots, :computer_shots, :player_board, :computer_board
   def initialize
-    @player_grid = []
-    @computer_grid =[]
+    @player_shots = []
+    @computer_shots =[]
     @player_board = player_board
     @computer_board = computer_board
   end
@@ -66,6 +66,7 @@ class Game
     puts "Enter the coordinate for your shot:"
     print ">"
     player_shot
+    computer_shot
   end
 
   def player_shot
@@ -82,6 +83,25 @@ class Game
     else
       puts "Your shot on #{input} was a miss."
 
+    end
+  end
+
+  def computer_shot
+    shot = @player_board.cells.keys.sample
+    if @computer_shots.include?(shot)
+      computer_shot
+    else
+      if @player_board.cells[shot].ship == true && @player_board.cells[shot].ship.health == 1
+        puts "My shot on #{shot} has sunk your {#{@player_board.cells[shot].ship.name}}"
+        @computer_shots << shot
+      elsif @player_board.cells[shot].ship == true
+        @player_board.cells[shot].fire_upon
+        puts "My shot on #{shot} was a hit!"
+        @computer_shots << shot
+      else
+        puts "My shot on #{shot} was a miss."
+        @computer_shots << shot
+      end
     end
   end
 end

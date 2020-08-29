@@ -40,7 +40,7 @@ attr_reader :coordinate, :ship
     elsif @ship.sunk? == true
       'X'
     else
-      'S'
+      'M'
     end
   end
 end
