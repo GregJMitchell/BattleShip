@@ -23,10 +23,17 @@ class Board
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4")
     }
+    @used_cells = []
   end
 
   def valid_coordinate?(coord)
     @cells.keys.include?(coord)
+  end
+
+  def is_overlapping?(placement)
+    placement.each do |cell|
+      @used_cells << cell
+    end
   end
 
   def valid_placement?(ship, placement)
