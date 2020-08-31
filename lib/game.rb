@@ -112,20 +112,28 @@ class Game
   end
   
   def is_player_winner?
-    @player_board.board.cells.all? do |cell|
-      cell.ship == nil
+    @player_board.cells.all? do |cell|
+      cell[-1].ship == nil
     end
   end
 
   def determine_winner
     if is_player_winner? == true
       "I won!"
-    else
+    elsif is_computer_winner? == true
       'You won!'
+    end
+  end
+
+  def is_computer_winner?
+    @computer_board.cells.all? do |cell|
+      cell[-1].ship == nil
     end
   end
 
   def start
     while @player_board.board.cells.ship.any?
+
+    end
   end
 end
