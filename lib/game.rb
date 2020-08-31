@@ -49,13 +49,14 @@ class Game
     @player_board = Board.new
     cruiser = Ship.new("cruiser", 3)
     submarine = Ship.new("submarine", 2)
-    print @player_board.render
+    print @player_board.render(true)
     puts "Enter squares for cruiser (3 spaces):"
     print ">"
     setup_ship(cruiser, @player_board)
     puts "Enter squares for submarine (2 spaces):"
     print ">"
     setup_ship(submarine, @player_board)
+    computer_placement
   end
 
   def render_turn
@@ -75,7 +76,7 @@ class Game
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
       player_shot
-    elsif @player_shots.include(input)
+    elsif @player_shots.include?(input)
       puts "You have already shot at #{input}"
       player_shot
     elsif @computer_board.cells[input].ship == true && @computer_board.cells[input].ship.health == 1
@@ -122,6 +123,8 @@ class Game
       "I won!"
     elsif is_computer_winner? == true
       'You won!'
+    else
+      false
     end
   end
 
@@ -132,8 +135,9 @@ class Game
   end
 
   def start
-    while @player_board.board.cells.ship.any?
-
+    setup
+    while determine_winner == false
+      render_turn
     end
   end
 end

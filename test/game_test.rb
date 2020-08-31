@@ -22,6 +22,5 @@ class GameTest < Minitest::Test
     game.computer_placement
 
     assert_equal false, game.is_computer_winner?
-
   end
 end

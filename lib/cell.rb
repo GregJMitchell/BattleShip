@@ -31,7 +31,7 @@ attr_reader :coordinate, :ship
   end
 
   def render(player = false)
-    if @ship == nil
+    if @ship.empty?
       '.'
     elsif @ship.sunk? == true
       'X'
