@@ -6,7 +6,7 @@ class Game
   attr_reader :player_shots, :computer_shots, :player_board, :computer_board
   def initialize
     @player_shots = []
-    @computer_shots =[]
+    @computer_shots = []
     @player_board = player_board
     @computer_board = computer_board
   end
@@ -109,5 +109,23 @@ class Game
         @computer_shots << shot
       end
     end
+  end
+  
+  def is_player_winner?
+    @player_board.board.cells.all? do |cell|
+      cell.ship == nil
+    end
+  end
+
+  def determine_winner
+    if is_player_winner? == true
+      "I won!"
+    else
+      'You won!'
+    end
+  end
+
+  def start
+    while @player_board.board.cells.ship.any?
   end
 end
