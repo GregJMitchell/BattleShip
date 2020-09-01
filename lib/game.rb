@@ -6,7 +6,7 @@ class Game
   attr_reader :player_shots, :computer_shots, :player_board, :computer_board
   def initialize
     @player_shots = []
-    @computer_shots =[]
+    @computer_shots = []
     @player_board = player_board
     @computer_board = computer_board
   end
@@ -49,13 +49,14 @@ class Game
     @player_board = Board.new
     cruiser = Ship.new("cruiser", 3)
     submarine = Ship.new("submarine", 2)
-    print @player_board.render
+    print @player_board.render(true)
     puts "Enter squares for cruiser (3 spaces):"
     print ">"
     setup_ship(cruiser, @player_board)
     puts "Enter squares for submarine (2 spaces):"
     print ">"
     setup_ship(submarine, @player_board)
+    computer_placement
   end
 
   def render_turn
@@ -72,22 +73,25 @@ class Game
   def player_shot
     input = gets.chomp
     input = input.upcase
+    #require 'pry'; binding.pry
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
       player_shot
-    elsif @player_shots.include(input)
+    elsif @player_shots.include?(input)
       puts "You have already shot at #{input}"
       player_shot
-    elsif @computer_board.cells[input].ship == true && @computer_board.cells[input].ship.health == 1
+    elsif @computer_board.cells[input].ship != nil && @computer_board.cells[input].ship.health == 1
       puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
       @player_shots << input
-    elsif @computer_board.cells[input].ship == true
+      @computer_board.cells[input].fire_upon
+    elsif @computer_board.cells[input].ship != true
       @computer_board.cells[input].fire_upon
       puts "Your shot on #{input} was a hit!"
-      @@player_shots << input
+      @player_shots << input
     else
       puts "Your shot on #{input} was a miss."
       @player_shots << input
+      @computer_board.cells[input].fire_upon
 
     end
   end
@@ -100,14 +104,46 @@ class Game
       if @player_board.cells[shot].ship == true && @player_board.cells[shot].ship.health == 1
         puts "My shot on #{shot} has sunk your {#{@player_board.cells[shot].ship.name}}"
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       elsif @player_board.cells[shot].ship == true
         @player_board.cells[shot].fire_upon
         puts "My shot on #{shot} was a hit!"
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       else
         puts "My shot on #{shot} was a miss."
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       end
+    end
+  end
+  
+  def is_player_winner?
+    @player_board.cells.all? do |cell|
+      cell[-1].ship == nil
+    end
+  end
+
+  def determine_winner
+    if is_player_winner? == true
+      "I won!"
+    elsif is_computer_winner? == true
+      'You won!'
+    else
+      false
+    end
+  end
+
+  def is_computer_winner?
+    @computer_board.cells.all? do |cell|
+      cell[-1].ship == nil
+    end
+  end
+
+  def start
+    setup
+    while determine_winner == false
+      render_turn
     end
   end
 end

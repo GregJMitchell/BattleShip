@@ -4,6 +4,7 @@ attr_reader :coordinate, :ship
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = ship
+    @fired_upon == false
   end
 
   def empty?
@@ -19,7 +20,7 @@ attr_reader :coordinate, :ship
   end
 
   def fired_upon?
-    if @ship.health < @ship.length
+    if @fired_upon == true
       true
     else
       false
@@ -27,22 +28,27 @@ attr_reader :coordinate, :ship
   end
 
   def fire_upon
-    @ship.hit
+    if empty?
+      @fired_upon = true
+    else
+      @fired_upon = true
+      @ship.hit
+    end
   end
 
   def render(player = false)
-    if @ship == nil
+    if empty? && fired_upon? == true
+      'M'
+    elsif empty? == true
       '.'
     elsif @ship.sunk? == true
       'X'
-    elsif fired_upon? == true
+    elsif fired_upon? == true && empty? == false
       'H'
     elsif player == false
       '.'
     elsif player == true
       'S'
-    else
-      'M'
     end
   end
 end
