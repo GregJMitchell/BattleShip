@@ -70,17 +70,19 @@ class Game
     print ">"
     player_shot
     computer_shot
+    print "\n"
   end
 
   def player_shot
     input = gets.chomp
     input = input.upcase
-    #require 'pry'; binding.pry
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
+      print '>'
       player_shot
     elsif @player_shots.include?(input)
       puts "You have already shot at #{input}"
+      print '>'
       player_shot
     elsif @computer_board.cells[input].ship != nil && @computer_board.cells[input].ship.health <= 1
       puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
@@ -131,7 +133,9 @@ class Game
 
   def determine_winner
     if is_player_winner? == true && is_computer_winner? == false
+      puts '~*~*~*~*~*~*~*~*~*~*~*~*~*~*~'
       puts "You won!"
+      puts '~*~*~*~*~*~*~*~*~*~*~*~*~*~*~'
     elsif is_computer_winner? == true && is_player_winner? == false
       puts 'I won!'
     elsif is_player_winner? == true && is_computer_winner? == true
@@ -150,9 +154,16 @@ class Game
   end
 
   def start
-    setup
-    while determine_winner == false
-      render_turn
+    puts 'Welcome to BATTLESHIP'
+    puts 'Enter p to play. Enter q to quit.'
+    input = gets.chomp.downcase
+    if input == 'p'
+      setup
+      while determine_winner == false
+        render_turn
+      end
+    elsif input == 'q'
+      puts 'Goodbye.'
     end
   end
 end
