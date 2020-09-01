@@ -9,6 +9,8 @@ class Game
     @computer_shots = []
     @player_board = player_board
     @computer_board = computer_board
+    @player_sunk_ships = 0
+    @computer_sunk_ships = 0
   end
 
   def setup_ship(ship, board)
@@ -80,11 +82,12 @@ class Game
     elsif @player_shots.include?(input)
       puts "You have already shot at #{input}"
       player_shot
-    elsif @computer_board.cells[input].ship != nil && @computer_board.cells[input].ship.health == 1
+    elsif @computer_board.cells[input].ship != nil && @computer_board.cells[input].ship.health <= 1
       puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
+      @computer_sunk_ships += 1
       @player_shots << input
       @computer_board.cells[input].fire_upon
-    elsif @computer_board.cells[input].ship != true
+    elsif @computer_board.cells[input].ship != nil
       @computer_board.cells[input].fire_upon
       puts "Your shot on #{input} was a hit!"
       @player_shots << input
@@ -101,12 +104,12 @@ class Game
     if @computer_shots.include?(shot)
       computer_shot
     else
-      if @player_board.cells[shot].ship == true && @player_board.cells[shot].ship.health == 1
+      if @player_board.cells[shot].ship != nil && @player_board.cells[shot].ship.health <= 1
         puts "My shot on #{shot} has sunk your {#{@player_board.cells[shot].ship.name}}"
+        @player_sunk_ships += 1
         @computer_shots << shot
         @player_board.cells[shot].fire_upon
-      elsif @player_board.cells[shot].ship == true
-        @player_board.cells[shot].fire_upon
+      elsif @player_board.cells[shot].ship != nil
         puts "My shot on #{shot} was a hit!"
         @computer_shots << shot
         @player_board.cells[shot].fire_upon
@@ -117,26 +120,32 @@ class Game
       end
     end
   end
-  
+
   def is_player_winner?
-    @player_board.cells.all? do |cell|
-      cell[-1].ship == nil
+    if @computer_sunk_ships == 2
+      true
+    else
+      false
     end
   end
 
   def determine_winner
-    if is_player_winner? == true
-      "I won!"
-    elsif is_computer_winner? == true
-      'You won!'
+    if is_player_winner? == true && is_computer_winner? == false
+      puts "You won!"
+    elsif is_computer_winner? == true && is_player_winner? == false
+      puts 'I won!'
+    elsif is_player_winner? == true && is_computer_winner? == true
+      puts "It's a draw!"
     else
       false
     end
   end
 
   def is_computer_winner?
-    @computer_board.cells.all? do |cell|
-      cell[-1].ship == nil
+    if @player_sunk_ships == 2
+      true
+    else
+      false
     end
   end
 
