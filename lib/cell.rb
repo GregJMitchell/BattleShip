@@ -4,7 +4,7 @@ attr_reader :coordinate, :ship
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = ship
-    @fired_upon == false
+    @fired_upon = false
   end
 
   def empty?
@@ -28,7 +28,7 @@ attr_reader :coordinate, :ship
   end
 
   def fire_upon
-    if empty?
+    if empty? == true
       @fired_upon = true
     else
       @fired_upon = true
