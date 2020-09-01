@@ -13,7 +13,7 @@ class Game
     @computer_sunk_ships = 0
   end
 
-  def setup_ship(ship, board)
+  def setup_ship(ship)
     input = gets.chomp
     input = input.upcase
     input = input.split(" ")
@@ -23,7 +23,7 @@ class Game
     else
       puts "Those are invalid coordinates. Please try again:"
       print ">"
-      setup_ship(ship, @player_board)
+      setup_ship(ship)
     end
   end
 
@@ -54,10 +54,10 @@ class Game
     print @player_board.render(true)
     puts "Enter squares for cruiser (3 spaces):"
     print ">"
-    setup_ship(cruiser, @player_board)
+    setup_ship(cruiser)
     puts "Enter squares for submarine (2 spaces):"
     print ">"
-    setup_ship(submarine, @player_board)
+    setup_ship(submarine)
     computer_placement
   end
 
@@ -133,11 +133,11 @@ class Game
 
   def determine_winner
     if is_player_winner? == true && is_computer_winner? == false
-      puts '~*~*~*~*~*~*~*~*~*~*~*~*~*~*~'
+      puts '*~*~*~*~*'
       puts "You won!"
-      puts '~*~*~*~*~*~*~*~*~*~*~*~*~*~*~'
+      puts '*~*~*~*~*'
     elsif is_computer_winner? == true && is_player_winner? == false
-      puts 'I won!'
+      p 'I won!'
     elsif is_player_winner? == true && is_computer_winner? == true
       puts "It's a draw!"
     else
