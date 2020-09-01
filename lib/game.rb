@@ -73,22 +73,25 @@ class Game
   def player_shot
     input = gets.chomp
     input = input.upcase
+    #require 'pry'; binding.pry
     if @computer_board.valid_coordinate?(input) == false
       puts "Please enter a valid coordinate."
       player_shot
     elsif @player_shots.include?(input)
       puts "You have already shot at #{input}"
       player_shot
-    elsif @computer_board.cells[input].ship == true && @computer_board.cells[input].ship.health == 1
+    elsif @computer_board.cells[input].ship != nil && @computer_board.cells[input].ship.health == 1
       puts "Your shot on #{input} has sunk their {#{@computer_board.cells[input].ship.name}}"
       @player_shots << input
-    elsif @computer_board.cells[input].ship == true
+      @computer_board.cells[input].fire_upon
+    elsif @computer_board.cells[input].ship != true
       @computer_board.cells[input].fire_upon
       puts "Your shot on #{input} was a hit!"
-      @@player_shots << input
+      @player_shots << input
     else
       puts "Your shot on #{input} was a miss."
       @player_shots << input
+      @computer_board.cells[input].fire_upon
 
     end
   end
@@ -101,13 +104,16 @@ class Game
       if @player_board.cells[shot].ship == true && @player_board.cells[shot].ship.health == 1
         puts "My shot on #{shot} has sunk your {#{@player_board.cells[shot].ship.name}}"
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       elsif @player_board.cells[shot].ship == true
         @player_board.cells[shot].fire_upon
         puts "My shot on #{shot} was a hit!"
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       else
         puts "My shot on #{shot} was a miss."
         @computer_shots << shot
+        @player_board.cells[shot].fire_upon
       end
     end
   end

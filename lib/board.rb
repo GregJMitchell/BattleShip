@@ -82,7 +82,7 @@ class Board
       end
     end
     grid.each_slice(4).to_a
-    grid.insert(0, " 1 2 3 4")
+    grid.insert(0, "  1 2 3 4")
     grid.insert(1, "\nA")
     grid.insert(6, "\nB")
     grid.insert(11, "\nC")
