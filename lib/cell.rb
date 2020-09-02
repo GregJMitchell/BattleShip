@@ -8,11 +8,7 @@ attr_reader :coordinate, :ship
   end
 
   def empty?
-    if @ship == nil
-     true
-    else
-     false
-    end
+    @ship.nil?
   end
 
   def place_ship(new_ship)
@@ -20,15 +16,11 @@ attr_reader :coordinate, :ship
   end
 
   def fired_upon?
-    if @fired_upon == true
-      true
-    else
-      false
-    end
+    @fired_upon
   end
 
   def fire_upon
-    if empty? == true
+    if empty?
       @fired_upon = true
     else
       @fired_upon = true

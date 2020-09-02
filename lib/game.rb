@@ -1,14 +1,7 @@
-require './lib/cell'
-require './lib/ship'
-require './lib/board'
-
 class Game
-  attr_reader :player_shots, :computer_shots, :player_board, :computer_board
   def initialize
     @player_shots = []
     @computer_shots = []
-    @player_board = player_board
-    @computer_board = computer_board
     @player_sunk_ships = 0
     @computer_sunk_ships = 0
   end
@@ -45,6 +38,7 @@ class Game
   end
 
   def setup
+    computer_placement
     puts "I have laid out my ships on the grid."
     puts "You need to lay out your two ships."
     puts "The cruiser is 3 units long and the submarine is two units long."
@@ -58,7 +52,6 @@ class Game
     puts "Enter squares for submarine (2 spaces):"
     print ">"
     setup_ship(submarine)
-    computer_placement
   end
 
   def render_turn
@@ -162,6 +155,10 @@ class Game
       while determine_winner == false
         render_turn
       end
+      puts "=============COMPUTER BOARD============="
+      print @computer_board.render
+      puts "==============PLAYER BOARD=============="
+      print @player_board.render(true)
     elsif input == 'q'
       puts 'Goodbye.'
     end
